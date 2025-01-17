@@ -115,7 +115,7 @@ src/
   location: string,
   maxParticipants: number,
   participants: ObjectId[],
-  status: "upcoming" | "ongoing" | "completed"
+  status: "upcoming" | "ongoing" | "passé"
 }
 
 // Project
@@ -126,7 +126,7 @@ src/
   technologies: string[],
   githubUrl: string,
   contributors: ObjectId[],
-  status: "active" | "completed" | "paused"
+  status: "active" | "passé" | "pause"
 }
 
 // Post

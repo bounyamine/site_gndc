@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../../contexts';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Alert } from '../../common'; // Ajoutez un composant Alert pour afficher les erreurs ou les messages.
+import { Alert } from '@/components/ui/alert';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 
 export const Login: React.FC = () => {
-  const { login, error, clearError } = useAuth();
+  const { login, error, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -25,41 +28,45 @@ export const Login: React.FC = () => {
     }
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-center">Bienvenue 👋</h2>
       <p className="text-gray-500 text-center mb-6">Connectez-vous pour continuer</p>
 
-      {/* Affichage des erreurs */}
       {error && (
-        <Alert type="error" onClose={clearError}>
+        <Alert>
           {error}
         </Alert>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        <Label> Adresse e-mail</Label>
         <Input
           type="email"
-          label="Adresse email"
           placeholder="Entrez votre email"
           value={formData.email}
-          onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+          onChange={handleInputChange}
+          name="email"
           required
         />
+        <Label> Mot de passe</Label>
         <Input
           type="password"
-          label="Mot de passe"
           placeholder="Entrez votre mot de passe"
           value={formData.password}
-          onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
+          onChange={handleInputChange}
+          name="password"
           required
         />
-        <Button type="submit" fullWidth disabled={isLoading}>
-          {isLoading ? 'Connexion...' : 'Se connecter'}
+        <Button type="submit" disabled={isLoading || authLoading}>
+          {(isLoading || authLoading) ? 'Connexion...' : 'Se connecter'}
         </Button>
       </form>
 
-      {/* Lien d'inscription */}
       <p className="text-sm text-gray-500 text-center mt-4">
         Pas encore inscrit ?{' '}
         <a href="/register" className="text-blue-500 hover:underline">

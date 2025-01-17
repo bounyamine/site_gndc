@@ -1,7 +1,6 @@
 import { Users, Calendar, Code, TrendingUp } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
-// Types
 interface DashboardStats {
   totalUsers: number;
   activeProjects: number;
@@ -106,7 +105,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <div className="bg-blue-900 text-white py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold mb-4">Tableau de Bord GNDC</h1>
@@ -114,7 +112,6 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Stats Grid */}
       <div className="container mx-auto px-4 -mt-8">
         <div className="grid md:grid-cols-4 gap-6">
           <StatCard title="Membres" value={stats.totalUsers} icon={Users} extraInfo="+15% ce mois" />
@@ -123,7 +120,6 @@ const Dashboard = () => {
           <StatCard title="Publications" value={stats.totalPosts} icon={TrendingUp} extraInfo="+5 cette semaine" />
         </div>
 
-        {/* Charts and Activity */}
         <div className="grid md:grid-cols-2 gap-6 mt-6">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h3 className="text-lg font-semibold mb-6">Croissance</h3>
@@ -158,7 +154,6 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Resources Section */}
         <div className="mt-6">
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h3 className="text-lg font-semibold mb-6">Ressources</h3>

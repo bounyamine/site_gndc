@@ -3,20 +3,19 @@ import axios from "axios";
 import { Github, Users, Star, GitBranch, Calendar } from "lucide-react";
 import { useState, useEffect } from "react";
 
-// Définir le type du projet
 interface Project {
   title: string;
   description: string;
   status: "active" | "development";
   technologies: string[];
+  githubUrl: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  contributors: any[]; // Vous pouvez affiner ce type en fonction de vos besoins
+  contributors: any[];
   stars: number;
   forks: number;
-  lastUpdated: string; // Par exemple, une chaîne représentant la date
+  lastUpdated: string;
 }
 
-// Composant pour une seule carte de projet
 const ProjectCard = ({ project }: { project: Project }) => {
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 transform hover:scale-105 transition-transform duration-300">
@@ -67,10 +66,10 @@ const ProjectCard = ({ project }: { project: Project }) => {
       </div>
 
       <div className="flex space-x-4">
-        <button className="flex items-center px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800">
+        <a className="flex items-center px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800" href={project.githubUrl}>
           <Github size={18} className="mr-2" />
           Voir sur GitHub
-        </button>
+        </a>
         <button className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50">
           Contribuer
         </button>
@@ -79,7 +78,6 @@ const ProjectCard = ({ project }: { project: Project }) => {
   );
 };
 
-// Composant pour les filtres
 const ProjectFilters = ({
   filters,
   setFilters,
@@ -142,9 +140,7 @@ const ProjectFilters = ({
   );
 };
 
-// Page principale
 const ProjectsPage = () => {
-  // Déclarer le type de projet
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [projects, setProjects] = useState<Project[]>([]);
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -162,7 +158,7 @@ const ProjectsPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('/api/projects'); // Remplacez par votre URL d'API
+        const response = await axios.get('http://localhost:3000/api/projects');
         setProjects(response.data);
       } catch (error) {
         console.error('Erreur lors du chargement des projets :', error);
@@ -172,7 +168,6 @@ const ProjectsPage = () => {
     fetchEvents();
   }, []);
 
-  // Filtrage des projets en fonction des filtres
   const filteredProjects = projects.filter((project) => {
     const matchStatus =
       filters.status === "all" || project.status === filters.status;
@@ -184,14 +179,12 @@ const ProjectsPage = () => {
     return matchStatus && matchTechnology && matchDate;
   });
 
-  // Pagination
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   const currentProjects = filteredProjects.slice(
     (currentPage - 1) * projectsPerPage,
     currentPage * projectsPerPage
   );
 
-  // Calcul des pages
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(filteredProjects.length / projectsPerPage); i++) {
     pageNumbers.push(i);
@@ -200,7 +193,6 @@ const ProjectsPage = () => {
   return (
     <MainLayout>
       <div className="bg-gray-50">
-        {/* Header */}
         <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl font-bold mb-4">Projets GNDC</h1>
@@ -210,18 +202,15 @@ const ProjectsPage = () => {
           </div>
         </div>
 
-        {/* Filters */}
         <div className="container mx-auto px-4 py-8">
           <ProjectFilters filters={filters} setFilters={setFilters} />
 
-          {/* Projects Grid */}
           <div className="grid md:grid-cols-2 gap-8">
             {currentProjects.map((project, index) => (
               <ProjectCard key={index} project={project} />
             ))}
           </div>
 
-          {/* Pagination */}
           <div className="flex justify-center mt-12">
             <nav className="flex space-x-2">
               {pageNumbers.map((number) => (

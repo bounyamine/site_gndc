@@ -44,7 +44,6 @@ const EventsPage: React.FC = () => {
   return (
     <MainLayout>
       <div className="min-h-screen bg-gray-50">
-        {/* Header */}
         <div className="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
           <div className="container mx-auto px-4">
             <h1 className="text-4xl font-bold mb-4">Événements GNDC</h1>
@@ -52,7 +51,6 @@ const EventsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Filters Section */}
         <div className="container mx-auto px-4 py-8">
           <div className="bg-white rounded-lg shadow p-6 mb-8">
             <div className="grid md:grid-cols-4 gap-4">
@@ -91,7 +89,6 @@ const EventsPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Events Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredEvents.length > 0 ? (
               filteredEvents.map((event) => (

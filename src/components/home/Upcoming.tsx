@@ -15,7 +15,7 @@ export const Upcoming: React.FC = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get<Event[]>('/api/events'); // Remplacez par l'URL de votre API
+        const response = await axios.get<Event[]>('http://localhost:3000/api/events');
         setEvents(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des événements :', error);
@@ -32,7 +32,10 @@ export const Upcoming: React.FC = () => {
         {events.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {events.map((event) => (
-              <div key={event._id} className="border rounded-lg overflow-hidden">
+              <div
+                key={event._id}
+                className="bg-white border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+              >
                 <img
                   src={event.imageUrl}
                   alt={event.title}
